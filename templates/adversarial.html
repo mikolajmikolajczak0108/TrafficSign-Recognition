@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Atak Adwersarialny</title>
+  </head>
+  <body>
+    <h1>Atak Adwersarialny</h1>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% elif original_class_name %}
+    <p>
+      Oryginalna klasa: {{ original_class_name }} (ID: {{ original_class_id }})
+    </p>
+    <p>
+      Klasa po ataku adwersarialnym: {{ adv_class_name }} (ID: {{ adv_class_id
+      }})
+    </p>
+    <h2>Oryginalny Obraz:</h2>
+    <img
+      src="{{ url_for('static', filename='uploads/' + original_image_path.split('/')[-1]) }}"
+      alt="Original Image"
+      width="200"
+    />
+    <h2>Obraz Adwersarialny:</h2>
+    <img
+      src="{{ url_for('static', filename='uploads/' + adversarial_image_path.split('/')[-1]) }}"
+      alt="Adversarial Image"
+      width="200"
+    />
+    {% else %}
+    <form method="post" enctype="multipart/form-data">
+      <p>Wybierz obraz znaku drogowego do ataku adwersarialnego:</p>
+      <input type="file" name="file" accept="image/*" />
+      <input type="submit" value="Prześlij i Atakuj" />
+    </form>
+    {% endif %}
+    <p><a href="{{ url_for('index') }}">Powrót do strony głównej</a></p>
+  </body>
+</html>

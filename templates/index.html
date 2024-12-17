@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rozpoznawanie Znaków Drogowych</title>
+  </head>
+  <body>
+    <h1>Rozpoznawanie i Odporność Modelu na Znaki Drogowe</h1>
+    <ul>
+      <li><a href="{{ url_for('train') }}">Trenuj Model</a></li>
+      <li><a href="{{ url_for('test') }}">Testuj Model</a></li>
+      <li><a href="{{ url_for('upload') }}">Prześlij Obraz Znaku</a></li>
+      <li>
+        <a href="{{ url_for('adversarial_attack') }}">Atak Adwersarialny</a>
+      </li>
+    </ul>
+  </body>
+</html>
