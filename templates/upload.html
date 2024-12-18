@@ -1,54 +1,59 @@
-<!DOCTYPE html>
-<html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Prześlij Obraz Znaku</title>
-  </head>
-  <body>
-    <h1>Prześlij Obraz Znaku</h1>
-    {% if message %}
-    <p>{{ message }}</p>
-    {% elif class_name %}
-    <p>Przewidywana klasa: {{ class_name }} (ID: {{ class_id }})</p>
-    <h2>Twój obraz:</h2>
-    <img
-      src="{{ url_for('static', filename='uploads/' + image_path.split('/')[-1]) }}"
-      alt="Uploaded Image"
-      width="200"
-    />
+{% extends "base.html" %} {% block title %}Prześlij Obraz Znaku{% endblock %} {%
+block content %}
+<div class="content-box">
+  <h2>Prześlij Obraz Znaku</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  <a class="button" href="{{ url_for('index') }}">Powrót</a>
+  {% elif class_name %}
+  <p>
+    Przewidywana klasa: <strong>{{ class_name }} (ID: {{ class_id }})</strong>
+  </p>
+  <div class="image-section">
+    <div>
+      <h3>Twój Obraz</h3>
+      <img
+        src="{{ url_for('static', filename='uploads/' + image_path.split('/')[-1]) }}"
+        alt="Uploaded Image"
+        class="classified-img"
+      />
+    </div>
     {% if example_image_path %}
-    <h2>Przykładowy obraz z przewidywanej klasy:</h2>
-    <img
-      src="{{ url_for('static', filename=example_image_path.split('static/')[-1]) }}"
-      alt="Example Image"
-      width="200"
-    />
+    <div>
+      <h3>Przykładowy obraz z tej klasy:</h3>
+      <img
+        src="{{ url_for('static', filename=example_image_path.split('static/')[-1]) }}"
+        alt="Example Image"
+        class="classified-img"
+      />
+    </div>
     {% endif %}
-    <h3>Czy model poprawnie sklasyfikował obraz?</h3>
-    <form method="get">
-      <input type="hidden" name="class_id" value="{{ class_id }}" />
-      <input type="hidden" name="image_path" value="{{ image_path }}" />
-      <label>
-        <input type="radio" name="feedback" value="correct" checked /> Tak
-      </label>
-      <label>
-        <input type="radio" name="feedback" value="incorrect" /> Nie
-      </label>
-      <p>Jeśli nie, wybierz prawidłową klasę:</p>
-      <select name="correct_class_id">
-        {% for id, name in sign_names.items() %}
-        <option value="{{ id }}">{{ name }} (ID: {{ id }})</option>
-        {% endfor %}
-      </select>
-      <input type="submit" value="Wyślij opinię" />
-    </form>
-    {% else %}
-    <form method="post" enctype="multipart/form-data">
-      <p>Wybierz obraz znaku drogowego do przesłania:</p>
-      <input type="file" name="file" accept="image/*" />
-      <input type="submit" value="Prześlij i Klasyfikuj" />
-    </form>
-    {% endif %}
-    <p><a href="{{ url_for('index') }}">Powrót do strony głównej</a></p>
-  </body>
-</html>
+  </div>
+  <h3>Czy model poprawnie sklasyfikował obraz?</h3>
+  <form method="get" class="feedback-form">
+    <input type="hidden" name="class_id" value="{{ class_id }}" />
+    <input type="hidden" name="image_path" value="{{ image_path }}" />
+    <label>
+      <input type="radio" name="feedback" value="correct" checked /> Tak
+    </label>
+    <label>
+      <input type="radio" name="feedback" value="incorrect" /> Nie
+    </label>
+    <p>Jeśli nie, wybierz prawidłową klasę:</p>
+    <select name="correct_class_id">
+      {% for id, name in sign_names.items() %}
+      <option value="{{ id }}">{{ name }} (ID: {{ id }})</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Wyślij opinię" class="button primary" />
+  </form>
+  {% else %}
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    <p>Wybierz obraz znaku drogowego:</p>
+    <input type="file" name="file" accept="image/*" class="file-input" />
+    <input type="submit" value="Prześlij i Klasyfikuj" class="button primary" />
+  </form>
+  {% endif %}
+  <a class="button" href="{{ url_for('index') }}">Powrót</a>
+</div>
+{% endblock %}

@@ -1,40 +1,34 @@
-<!DOCTYPE html>
-<html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Atak Adwersarialny</title>
-  </head>
-  <body>
-    <h1>Atak Adwersarialny</h1>
-    {% if message %}
-    <p>{{ message }}</p>
-    {% elif original_class_name %}
-    <p>
-      Oryginalna klasa: {{ original_class_name }} (ID: {{ original_class_id }})
-    </p>
-    <p>
-      Klasa po ataku adwersarialnym: {{ adv_class_name }} (ID: {{ adv_class_id
-      }})
-    </p>
-    <h2>Oryginalny Obraz:</h2>
-    <img
-      src="{{ url_for('static', filename='uploads/' + original_image_path.split('/')[-1]) }}"
-      alt="Original Image"
-      width="200"
+{% extends "base.html" %} {% block title %}Atak Adwersarialny{% endblock %} {%
+block content %}
+<div class="content-box">
+  <h2>Atak Adwersarialny</h2>
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    <p>Wybierz obraz do zaatakowania:</p>
+    <input type="file" name="file" accept="image/*" class="file-input" />
+    <input
+      type="submit"
+      value="Wygeneruj Przykład Adwersarialny"
+      class="button primary"
     />
-    <h2>Obraz Adwersarialny:</h2>
-    <img
-      src="{{ url_for('static', filename='uploads/' + adversarial_image_path.split('/')[-1]) }}"
-      alt="Adversarial Image"
-      width="200"
-    />
-    {% else %}
-    <form method="post" enctype="multipart/form-data">
-      <p>Wybierz obraz znaku drogowego do ataku adwersarialnego:</p>
-      <input type="file" name="file" accept="image/*" />
-      <input type="submit" value="Prześlij i Atakuj" />
-    </form>
-    {% endif %}
-    <p><a href="{{ url_for('index') }}">Powrót do strony głównej</a></p>
-  </body>
-</html>
+  </form>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% endif %} {% if original_class_name %}
+  <div class="image-section">
+    <div>
+      <h3>Oryginalna Predykcja: {{ original_class_name }}</h3>
+      <img src="{{ original_image_path }}" width="200" class="classified-img" />
+    </div>
+    <div>
+      <h3>Adwersarialna Predykcja: {{ adv_class_name }}</h3>
+      <img
+        src="{{ adversarial_image_path }}"
+        width="200"
+        class="classified-img"
+      />
+    </div>
+  </div>
+  {% endif %}
+  <a class="button" href="{{ url_for('index') }}">Powrót</a>
+</div>
+{% endblock %}

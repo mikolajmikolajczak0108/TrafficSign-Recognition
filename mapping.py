@@ -1,3 +1,4 @@
+# mapping.py
 import json
 import os
 
@@ -58,7 +59,6 @@ else:
     sign_names = default_sign_names
 
 
-# Function to save the mapping
 def save_mapping():
     with open(mapping_file, "w", encoding="utf-8") as f:
         json.dump(sign_names, f, ensure_ascii=False, indent=4)

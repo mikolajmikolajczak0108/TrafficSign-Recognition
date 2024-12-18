@@ -1,37 +1,31 @@
-<!DOCTYPE html>
-<html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Testuj Model</title>
-  </head>
-  <body>
-    <h1>Testuj Model</h1>
-    {% if message %}
-    <p>{{ message }}</p>
-    {% else %}
-    <p>
-      Dokładność na zbiorze walidacyjnym: {{ "%.2f" | format(accuracy * 100) }}%
-    </p>
-    <h2>Raport klasyfikacji:</h2>
-    <table border="1">
-      <tr>
-        <th>Klasa</th>
-        <th>Precyzja</th>
-        <th>Pełność</th>
-        <th>F1-score</th>
-        <th>Liczba próbek</th>
-      </tr>
-      {% for class_id, metrics in report.items() if class_id.isdigit() %}
-      <tr>
-        <td>{{ sign_names.get(class_id, class_id) }} (ID: {{ class_id }})</td>
-        <td>{{ "%.2f" | format(metrics['precision'] * 100) }}%</td>
-        <td>{{ "%.2f" | format(metrics['recall'] * 100) }}%</td>
-        <td>{{ "%.2f" | format(metrics['f1-score'] * 100) }}%</td>
-        <td>{{ metrics['support'] }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    {% endif %}
-    <p><a href="{{ url_for('index') }}">Powrót do strony głównej</a></p>
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Testuj Model{% endblock %} {% block
+content %}
+<div class="content-box">
+  <h2>Test na Zbiorze Walidacyjnym</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% else %}
+  <p>Dokładność: <strong>{{ "%.2f"|format(accuracy*100) }}%</strong></p>
+  <h3>Raport klasyfikacji:</h3>
+  <table class="table-report">
+    <tr>
+      <th>Klasa</th>
+      <th>Precyzja</th>
+      <th>Pełność</th>
+      <th>F1-score</th>
+      <th>Liczba próbek</th>
+    </tr>
+    {% for class_id, metrics in report.items() if class_id.isdigit() %}
+    <tr>
+      <td>{{ sign_names.get(class_id, class_id) }} (ID: {{ class_id }})</td>
+      <td>{{ "%.2f"|format(metrics['precision']*100) }}%</td>
+      <td>{{ "%.2f"|format(metrics['recall']*100) }}%</td>
+      <td>{{ "%.2f"|format(metrics['f1-score']*100) }}%</td>
+      <td>{{ metrics['support'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+  <a class="button" href="{{ url_for('index') }}">Powrót</a>
+</div>
+{% endblock %}

@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Rozpoznawanie Znaków Drogowych</title>
-  </head>
-  <body>
-    <h1>Rozpoznawanie i Odporność Modelu na Znaki Drogowe</h1>
-    <ul>
-      <li><a href="{{ url_for('train') }}">Trenuj Model</a></li>
-      <li><a href="{{ url_for('test') }}">Testuj Model</a></li>
-      <li><a href="{{ url_for('upload') }}">Prześlij Obraz Znaku</a></li>
-      <li>
-        <a href="{{ url_for('adversarial_attack') }}">Atak Adwersarialny</a>
-      </li>
-    </ul>
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Strona Główna{% endblock %} {% block
+content %}
+<div class="content-box">
+  <h2>
+    Witaj w aplikacji do Rozpoznawania i Oceny Odporności Modelu na Znaki
+    Drogowe
+  </h2>
+  <p>Wybierz jedną z opcji w menu, aby rozpocząć pracę z modelem.</p>
+  <div class="info-cards">
+    <div class="card">
+      <h3>Trenuj Model</h3>
+      <p>Rozpocznij trening modelu na zbiorze treningowym.</p>
+      <a class="button" href="{{ url_for('train') }}">Przejdź</a>
+    </div>
+    <div class="card">
+      <h3>Testuj Model</h3>
+      <p>Sprawdź skuteczność modelu na zbiorze walidacyjnym lub końcowym.</p>
+      <a class="button" href="{{ url_for('test') }}">Przejdź</a>
+    </div>
+    <div class="card">
+      <h3>Prześlij Obraz</h3>
+      <p>Wyślij własny obraz znaku drogowego do klasyfikacji.</p>
+      <a class="button" href="{{ url_for('upload_route') }}">Przejdź</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Rozpoznawanie Znaków Drogowych{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='logo.png') }}"
+          alt="Logo"
+          class="logo-img"
+        />
+        <h1 class="site-title">Rozpoznawanie Znaków Drogowych</h1>
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="{{ url_for('index') }}">Strona Główna</a></li>
+          <li><a href="{{ url_for('train') }}">Trenuj Model</a></li>
+          <li><a href="{{ url_for('test') }}">Testuj na Walidacji</a></li>
+          <li><a href="{{ url_for('final_test') }}">Test Końcowy</a></li>
+          <li><a href="{{ url_for('upload_route') }}">Prześlij Obraz</a></li>
+          <li>
+            <a href="{{ url_for('adversarial_attack') }}">Atak Adwersarialny</a>
+          </li>
+          <li>
+            <a href="{{ url_for('video_classify') }}">Klasyfikacja Wideo</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>
+      <p>
+        Projekt - Rozpoznawanie Znaków Drogowych | Mikołajczak | Paszek | 2024
+      </p>
+    </footer>
+  </body>
+</html>
