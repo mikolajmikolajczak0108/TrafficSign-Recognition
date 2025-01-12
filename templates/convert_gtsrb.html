@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Konwersja GTSRB -> YOLO{% endblock %}
+{% block content %}
+<div class="content-box">
+  <h2>Konwertuj GTSRB do formatu YOLO</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% endif %}
+  <form method="post">
+    <button type="submit" class="button primary">Konwertuj</button>
+  </form>
+</div>
+{% endblock %}

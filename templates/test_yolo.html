@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Test YOLOv5{% endblock %} {% block
+content %}
+<div class="content-box">
+  <h2>Test YOLOv5 (val.py) - mAP i inne metryki</h2>
+  <p>
+    Kliknij przycisk, aby uruchomić skrypt <code>val.py</code> i uzyskać wynik.
+  </p>
+  <form method="post">
+    <button type="submit" class="button primary">Uruchom test YOLOv5</button>
+  </form>
+  <br />
+  {% if console_output %}
+  <h3>Wynik z konsoli:</h3>
+  <pre>{{ console_output }}</pre>
+  {% endif %}
+</div>
+{% endblock %}

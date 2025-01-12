@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Test YOLOv5 - wideo z YouTube{%
+endblock %} {% block content %}
+<div class="content-box">
+  <h2>Test YOLOv5 na wideo z YouTube (yt-dlp)</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% endif %}
+  <form method="post">
+    <label>Link do filmu YouTube:</label>
+    <input type="text" name="youtube_url" style="width: 300px" />
+    <button type="submit" class="button primary">Pobierz i uruchom YOLO</button>
+  </form>
+  {% if video_html_path %}
+  <h3>Wideo z zarysowanymi detekcjami:</h3>
+  <video width="640" controls>
+    <source src="{{ video_html_path }}" type="video/mp4" />
+    Twoja przeglądarka nie obsługuje odtwarzania wideo w HTML5.
+  </video>
+  {% endif %}
+</div>
+{% endblock %}

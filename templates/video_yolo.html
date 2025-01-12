@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}YOLOv5 - Detekcja znaków (plik
+wideo){% endblock %} {% block content %}
+<div class="content-box">
+  <h2>Wideo - Detekcja znaków drogowych (YOLOv5)</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit" class="button primary">
+      Załaduj wideo do YOLOv5
+    </button>
+  </form>
+  <br />
+  <button onclick="playVideoYolo()" class="button">Play Video</button>
+  <div>
+    <img
+      id="videoStreamYolo"
+      style="max-width: 640px; border: 1px solid #000"
+    />
+  </div>
+</div>
+<script>
+  function playVideoYolo() {
+    document.getElementById("videoStreamYolo").src =
+      "{{ url_for('video_feed_yolo') }}";
+  }
+</script>
+{% endblock %}

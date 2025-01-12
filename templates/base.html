@@ -2,46 +2,202 @@
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Rozpoznawanie Znaków Drogowych{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>{% block title %}Moja aplikacja{% endblock %}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1 {
+        margin-bottom: 10px;
+      }
+      nav {
+        margin-bottom: 20px;
+      }
+
+      /* -- NAVIGATION MENU -- */
+      ul.nav-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex; /* horizontal menu */
+        flex-wrap: wrap; /* allow wrap if viewport is small */
+      }
+      ul.nav-list > li {
+        position: relative;
+        margin-right: 15px;
+      }
+      ul.nav-list > li > a {
+        text-decoration: none;
+        padding: 8px 12px;
+        background-color: #ccc;
+        color: #000;
+        border-radius: 4px;
+      }
+      ul.nav-list > li > a:hover {
+        background-color: #bbb;
+      }
+
+      /* Submenu */
+      ul.nav-list li ul {
+        display: none;
+        position: absolute;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        z-index: 999;
+      }
+      ul.nav-list li:hover ul {
+        display: block; /* show on hover */
+      }
+      ul.nav-list li ul li {
+        width: 180px;
+        margin: 0;
+      }
+      ul.nav-list li ul li a {
+        display: block;
+        padding: 8px 12px;
+        margin: 0;
+        background-color: #eee;
+        color: #000;
+      }
+      ul.nav-list li ul li a:hover {
+        background-color: #ddd;
+      }
+
+      .content-box {
+        margin: 20px 0;
+      }
+      .message {
+        background: #ffd;
+        border: 1px solid #cc9;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .table-report {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .table-report th,
+      .table-report td {
+        border: 1px solid #ccc;
+        padding: 5px;
+        text-align: center;
+      }
+      pre {
+        background: #f7f7f7;
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+      /* Buttons (optional) */
+      .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        background-color: #ccc;
+        color: #000;
+        text-decoration: none;
+        border-radius: 4px;
+        margin: 5px 0;
+      }
+      .btn:hover {
+        background-color: #bbb;
+      }
+      .btn-primary {
+        background-color: #28a745;
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background-color: #218838;
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img
-          src="{{ url_for('static', filename='logo.png') }}"
-          alt="Logo"
-          class="logo-img"
-        />
-        <h1 class="site-title">Rozpoznawanie Znaków Drogowych</h1>
-      </div>
-      <nav>
-        <ul class="nav-list">
-          <li><a href="{{ url_for('index') }}">Strona Główna</a></li>
-          <li><a href="{{ url_for('train') }}">Trenuj Model</a></li>
-          <li><a href="{{ url_for('test') }}">Testuj na Walidacji</a></li>
-          <li><a href="{{ url_for('final_test') }}">Test Końcowy</a></li>
-          <li><a href="{{ url_for('upload_route') }}">Prześlij Obraz</a></li>
-          <li>
-            <a href="{{ url_for('adversarial_attack') }}">Atak Adwersarialny</a>
-          </li>
-          <li>
-            <a href="{{ url_for('video_classify') }}">Klasyfikacja Wideo</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <h1>System Rozpoznawania Znaków Drogowych - YOLOv5</h1>
 
-    <main>{% block content %}{% endblock %}</main>
+    <!-- NAV -->
+    <nav>
+      <ul class="nav-list">
+        <!-- HOME -->
+        <li>
+          <a href="{{ url_for('index') }}">Home</a>
+        </li>
 
-    <footer>
-      <p>
-        Projekt - Rozpoznawanie Znaków Drogowych | Mikołajczak | Paszek | 2024
-      </p>
-    </footer>
+        <!-- YOLOv5 -->
+        <li>
+          <a href="#">YOLOv5 ▼</a>
+          <ul>
+            <li>
+              <a href="{{ url_for('download_assets') }}">Pobierz YOLOv5</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- GTSRB -->
+        <li>
+          <a href="#">GTSRB ▼</a>
+          <ul>
+            <li>
+              <a href="{{ url_for('convert_gtsrb_to_yolo_route') }}"
+                >Konwersja -> YOLO</a
+              >
+            </li>
+            <li><a href="{{ url_for('train_yolo') }}">Trenuj YOLOv5</a></li>
+            <li><a href="{{ url_for('test_yolo') }}">Test YOLO (mAP)</a></li>
+          </ul>
+        </li>
+
+        <!-- TESTING -->
+        <li>
+          <a href="#">Testing ▼</a>
+          <ul>
+            <li><a href="{{ url_for('test_yolo_image') }}">Test (Obraz)</a></li>
+            <li>
+              <a href="{{ url_for('test_yolo_youtube') }}">Test (YouTube)</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- VIDEO -->
+        <li>
+          <a href="#">Wideo ▼</a>
+          <ul>
+            <li>
+              <a href="{{ url_for('video_yolo') }}">Wideo YOLOv5 (plik)</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- AUGMENTATION -->
+        <li>
+          <a href="#">Augmentacja ▼</a>
+          <ul>
+            <li>
+              <a href="{{ url_for('augment_data_advanced') }}"
+                >Zaawansowana (Albumentations)</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <!-- FINE-TUNING -->
+        <li>
+          <a href="#">Fine-tuning ▼</a>
+          <ul>
+            <li>
+              <a href="{{ url_for('fine_tune_advanced') }}"
+                >Fine-tuning (Zaaw. Data)</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <hr />
+    <div class="content-box">{% block content %}{% endblock %}</div>
   </body>
 </html>

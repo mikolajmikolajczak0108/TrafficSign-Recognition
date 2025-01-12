@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block title %}Fine-tuning{% endblock %} {% block
+content %}
+<h2>Fine-tuning na zaugmentowanym zestawie danych</h2>
+{% if message %}
+<div class="message">{{ message }}</div>
+{% endif %}
+<form method="post">
+  <button class="btn btn-primary" type="submit">Rozpocznij Fine-tuning</button>
+</form>
+{% endblock %}

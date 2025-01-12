@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Test YOLOv5 - obraz{% endblock %} {%
+block content %}
+<div class="content-box">
+  <h2>Test YOLOv5 na jednym obrazie</h2>
+  {% if message %}
+  <p class="message">{{ message }}</p>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit" class="button primary">Wykonaj detekcję</button>
+  </form>
+  {% if detected_image_path %}
+  <h3>Wykrycia:</h3>
+  <!-- Poprawiony zapis, rozbijamy split w osobnej zmiennej -->
+  {% set splitted = detected_image_path.split('/') %}
+  <img
+    src="{{ url_for('static', filename='uploads/' ~ splitted[-1]) }}"
+    style="max-width: 600px; border: 1px solid #000"
+  />
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}Zaawansowana Augmentacja{% endblock
+%} {% block content %}
+<h2>Augmentacja danych (Albumentations)</h2>
+{% if message %}
+<div class="message">{{ message }}</div>
+{% endif %}
+<form method="post">
+  <p>
+    Ta operacja utworzy nowy zestaw danych "my_gtsrb_aug_advanced" i plik
+    "gtsrb_aug_advanced.yaml".
+  </p>
+  <button class="btn btn-primary" type="submit">
+    Rozpocznij zaawansowaną augmentację
+  </button>
+</form>
+{% endblock %}
